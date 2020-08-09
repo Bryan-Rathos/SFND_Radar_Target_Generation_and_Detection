@@ -1,4 +1,4 @@
-# **SFND Radar Target Generation andDetection**
+# **SFND Radar Target Generation and Detection**
 Implementation of Radar target generation and detection using 2D FFT and 2D Cell Averaging - Constant False Alarm Rate (CA-CFAR) technique for noise supression.
 
 ## Project Layout
