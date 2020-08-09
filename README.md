@@ -38,7 +38,7 @@ In this section `line 66-83` we generate the signal and simulate the moving targ
 
 We use the `fft()` function in MATLAB to produce the 1D FFT of the beat signal on the range dimention. We further normalize, take the absoulte value and the one-sided signal of the 1D FFT output. The output of the 1D FFT is as shown below, which shows a peak correctly at 130 meters (+/- 10 meters) which is the target's initial position.
 
-<img src="./media/range_fft.PNG" width="779" height="414" />
+<img src="./media/rangeFFT.PNG" width="779" height="414" />
 
 ### 4. Doppler FFT (2nd FFT)
 
