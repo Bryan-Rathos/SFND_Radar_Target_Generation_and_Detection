@@ -56,7 +56,7 @@ Rx = zeros(1,length(t)); %received signal
 Mix = zeros(1,length(t)); %beat signal
 
 %Similar vectors for range_covered and time delay.
-rangw_t = zeros(1,length(t));     %range
+range_t = zeros(1,length(t));     %range
 time_delay = zeros(1,length(t));      %time delay
 
 
@@ -66,8 +66,8 @@ time_delay = zeros(1,length(t));      %time delay
 for i=1:length(t)         
     % *%TODO* :
     %For each time stamp update the Range of the Target for constant velocity. 
-    rangw_t(i) = targetRange + targetVelocity * t(i);
-    time_delay(i) = (2 * rangw_t(i))/c;
+    range_t(i) = targetRange + targetVelocity * t(i);
+    time_delay(i) = (2 * range_t(i))/c;
     
     % *%TODO* :
     %For each time sample we need update the transmitted and
@@ -114,6 +114,9 @@ subplot(2,1,1)
 % *%TODO* :
 % plot FFT output 
 plot(single_sided_sig_fft1);
+title('Range from First FFT')
+xlabel('Range/Frequency')
+ylabel('Amplitude')
 axis([0 200 0 1]);
 
 %% RANGE DOPPLER RESPONSE
@@ -145,6 +148,11 @@ RDM = 10*log10(RDM);
 doppler_axis = linspace(-100,100,Nd);
 range_axis = linspace(-200,200,Nr/2)*((Nr/2)/400);
 figure,surf(doppler_axis,range_axis,RDM);
+title('Range Doppler Map (2D FFT)')
+xlabel('Velocity')
+ylabel('Range')
+zlabel('Amplitude')
+
 
 %% CFAR implementation
 
@@ -188,7 +196,6 @@ noise_level = zeros(1,1);
 RDMpow = db2pow(RDM);
 
 kernel = ones(2*Td+2*Gd+1, 2*Tr+2*Gr+1);
-
 kernel(Td+1:Td+2*Gd+1,Tr+1:Tr+2*Gr+1) = 0;
 
 num_cells = (2*Tr+2*Gr+1)*(2*Td+2*Gd+1) - (2*Gr+1)*(2*Gd+1);
@@ -206,7 +213,7 @@ RDM(RDM >= threshold) = 1;
 %than the Range Doppler Map as the CUT cannot be located at the edges of
 %matrix. Hence,few cells will not be thresholded. To keep the map size same
 % set those values to 0. 
-%  
+  
 RDM = padarray(RDM,[Td+Gd,Tr+Gr],0);
 
 % *%TODO* :
@@ -214,6 +221,10 @@ RDM = padarray(RDM,[Td+Gd,Tr+Gr],0);
 %Doppler Response output.
 figure('Name','CA-CFAR Filtered RDM');
 surf(doppler_axis,range_axis,RDM);
+title('CA-CFAR Filtered RDM')
+xlabel('Velocity')
+ylabel('Range')
+zlabel('Amplitude')
 colorbar;
 
 
